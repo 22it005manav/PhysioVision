@@ -41,7 +41,7 @@ interface Report {
 // API functions
 const fetchUserData = async (username: string): Promise<User | null> => {
   try {
-    const response = await fetch(`http://localhost:8002/user/${username}`);
+    const response = await fetch(`http://3.230.74.202:11000/user/${username}`);
     if (!response.ok) {
       console.error("Failed to fetch user data");
       return null;
@@ -58,7 +58,7 @@ const fetchWeeklyPlan = async (
 ): Promise<WeeklyPlan | null> => {
   try {
     const response = await fetch(
-      `http://localhost:8002/weekly-plan/${username}`
+      `http://3.230.74.202:11000/weekly-plan/${username}`
     );
     if (!response.ok) {
       console.error("Failed to fetch weekly plan");
@@ -97,7 +97,7 @@ const Dashboard: React.FC = () => {
       // Fetch latest vision report (no username needed)
       try {
         const res = await fetch(
-          `http://localhost:8002/vision-report/latest`
+          `http://3.230.74.202:11000/vision-report/latest`
         );
         if (res.ok) {
           const reportData = await res.json();

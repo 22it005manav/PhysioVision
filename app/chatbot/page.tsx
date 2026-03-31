@@ -7,7 +7,7 @@ import { FaUserCircle, FaRobot } from "react-icons/fa"; // Icons for user and bo
 import { useUser } from "@/contexts/AppContext"; // Adjust the path as needed
 
 export default function FitnessAssistant() {
-  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8002";
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://3.230.74.202:11000";
   const { username } = useUser();
   const [messages, setMessages] = useState<
     { type: "user" | "bot"; content: string; timestamp: string }[]

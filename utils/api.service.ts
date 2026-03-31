@@ -16,7 +16,7 @@ const getAuthHeaders = () => {
 
 // Create Axios client
 const apiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8002",
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://3.230.74.202:11000",
   // Initially set the headers with empty Authorization, it will be updated dynamically in the interceptor
   headers: getAuthHeaders(),
 });

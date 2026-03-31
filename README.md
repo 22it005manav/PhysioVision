@@ -1,102 +1,333 @@
 # PhysioVision: AI-Powered Physiotherapy System
 
-## Overview
-
-PhysioVision is a full-stack, AI-powered physiotherapy platform that guides, monitors, and supports patients through their rehabilitation journey. It combines a modern web frontend, a robust backend with RAG-based chatbot, and a real-time computer vision system for exercise analysis.
-
----
+A modern, full-stack platform for guided physiotherapy rehabilitation combining real-time computer vision analysis, RAG-powered AI chatbot, and comprehensive patient management.
 
 ## Table of Contents
 
-1. [System Architecture](#system-architecture)
-2. [Tech Stack](#tech-stack)
-3. [Features](#features)
-4. [AI & Model Details](#ai--model-details)
-5. [Backend Logic](#backend-logic)
-6. [Vision Backend Logic](#vision-backend-logic)
-7. [Frontend Overview](#frontend-overview)
-8. [Setup & Running](#setup--running)
-9. [Limitations](#limitations)
-10. [Project Structure](#project-structure)
-11. [References & Media](#references--media)
+1. [Overview](#overview)
+2. [Key Features](#key-features)
+3. [System Architecture](#system-architecture)
+4. [Tech Stack](#tech-stack)
+5. [Project Structure](#project-structure)
+6. [Quick Start](#quick-start)
+7. [Detailed Documentation](#detailed-documentation)
+8. [Deployment](#deployment)
+
+## Overview
+
+PhysioVision guides patients through personalized physiotherapy rehabilitation with real-time feedback. The platform combines:
+
+- **Intelligent Computer Vision:** Real-time exercise form analysis and rep counting
+- **AI-Powered Chatbot:** RAG-based Q&A for therapy and nutrition guidance
+- **Patient Management:** Comprehensive health data tracking and progress reports
+- **Multi-language Support:** Bilingual audio/visual feedback (English & Urdu)
+
+---
+
+## Key Features
+
+### For Patients
+
+- ✓ User registration with health profile management
+- ✓ Personalized therapy plans based on physical attributes
+- ✓ Real-time exercise guidance with form feedback
+- ✓ Interactive AI chatbot for rehabilitation questions
+- ✓ Progress tracking and session reports
+- ✓ Bilingual audio feedback (English/Urdu)
+
+### For Developers
+
+- ✓ Clean, modular architecture with microservices
+- ✓ RESTful API with comprehensive documentation
+- ✓ WebSocket support for real-time data streaming
+- ✓ Easy to extend with new exercises and features
+- ✓ Production-ready code structure
 
 ---
 
 ## System Architecture
 
-- **Frontend:** Next.js (React, TypeScript, Tailwind CSS)
-- **API Backend:** FastAPI (Python) with MongoDB, RAG pipeline, and authentication
-- **Vision Backend:** Python WebSocket server using OpenCV, MediaPipe, and ML models for real-time exercise analysis
-- **Persistence:** MongoDB for user data, plans, and reports
-- **Communication:** REST APIs and WebSockets
-
----
+```
+┌─────────────────────────────────────────────────────────────┐
+│                         Frontend (Next.js)                   │
+│  React + TypeScript + Tailwind CSS + Ant Design             │
+└────────────────┬──────────────────────────┬─────────────────┘
+                 │                          │
+        HTTP REST API                  WebSocket
+                 │                          │
+     ┌───────────▼──────────┐    ┌─────────▼──────────┐
+     │  FastAPI Backend     │    │  Vision Backend    │
+     │  (Port 8002)         │    │  WebSocket Server  │
+     │                      │    │  (Port 8001)       │
+     │  • Authentication    │    │                    │
+     │  • User Management   │    │  • Exercise        │
+     │  • Therapy Plans     │    │    Analysis        │
+     │  • RAG Chatbot       │    │  • Form Feedback   │
+     │  • Session Reports   │    │  • Rep Counting    │
+     └───────────┬──────────┘    └─────────┬──────────┘
+                 │                          │
+                 └──────────┬───────────────┘
+                            │
+              ┌─────────────▼──────────────┐
+              │   MongoDB Database         │
+              │  (User, Plans, Reports)    │
+              └────────────────────────────┘
+```
 
 ## Tech Stack
 
-- **Frontend:** Next.js, React, TypeScript, Tailwind CSS, Ant Design, Axios, WebSockets
-- **Backend:** FastAPI, Pydantic, Uvicorn, PyMongo, SentenceTransformers, LangChain, MistralAI, Pandas, OpenPyXL
-- **Vision Backend:** Python, OpenCV, MediaPipe, TensorFlow, scikit-learn, joblib, websockets, edge-tts, googletrans
-- **Database:** MongoDB
-- **Other:** Docker-ready, Windows batch scripts for easy startup
+### Frontend
+
+- **Framework:** Next.js 14 with React 18
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS + Ant Design
+- **HTTP Client:** Axios
+- **Real-time:** Socket.io Client
+- **State Management:** React Context API
+
+### Backend API
+
+- **Framework:** FastAPI
+- **Server:** Uvicorn
+- **Database:** MongoDB with PyMongo
+- **Validation:** Pydantic
+- **AI/Chat:** LangChain + MistralAI + Sentence Transformers
+
+### Vision Backend
+
+- **Computer Vision:** OpenCV
+- **Pose Detection:** MediaPipe
+- **ML Models:** TensorFlow/Keras + scikit-learn
+- **Communication:** WebSockets
+- **Audio:** Edge TTS + Google Translate
+- **Preprocessing:** NumPy + Pandas
+
+### Database
+
+- **Primary:** MongoDB (NoSQL document store)
+- **Embeddings:** Vector storage for RAG
 
 ---
 
-## Features
+## Project Structure
 
-- User registration, login, and profile management
-- Physical attributes and health data intake
-- AI chatbot for nutrition and therapy Q&A (RAG-based, adaptive)
-- Real-time posture analysis for Squats, Lunges, Warrior Pose, and Leg Raises
-- Rep counting and form feedback with visual and audio (English/Urdu) cues
-- Session report generation and progress tracking
-- Bilingual audio feedback (Edge TTS + translation)
-- Modular, multi-service architecture for easy extension
+```
+PhysioVision/
+├── Frontend (Next.js App)
+│   ├── app/                          # Next.js app directory
+│   │   ├── (auth)/                   # Auth routes (signin, signup, reset-password)
+│   │   ├── (default)/                # Public routes
+│   │   ├── api/                      # API integration services
+│   │   ├── dashboard/                # Patient dashboard
+│   │   ├── chatbot/                  # AI chatbot interface
+│   │   ├── contact/                  # Contact page
+│   │   ├── start-therapy/            # Therapy start page
+│   │   └── css/                      # Global styles
+│   ├── components/                   # Reusable React components
+│   │   ├── ui/                       # UI components (header, footer)
+│   │   └── [feature components]
+│   ├── contexts/                     # React Context for state management
+│   ├── utils/                        # Utility functions & services
+│   ├── public/                       # Static assets (images, videos, fonts)
+│   ├── package.json                  # Frontend dependencies
+│   ├── tsconfig.json                 # TypeScript config
+│   ├── tailwind.config.js            # Tailwind CSS config
+│   ├── next.config.js                # Next.js configuration
+│   └── .env.local                    # Environment variables
+│
+├── Backend/                          # FastAPI Backend
+│   ├── app/                          # Main application
+│   │   ├── __init__.py
+│   │   ├── main.py                   # FastAPI app definition & endpoints
+│   │   ├── chatbot.py                # RAG chatbot implementation
+│   │   └── Database/                 # MongoDB models & operations
+│   ├── requirements.txt              # Python dependencies
+│   ├── setup_database.py             # Database initialization
+│   ├── insert_sample_data.py         # Sample data for testing
+│   └── README.md                     # Backend documentation
+│
+├── Backend_Vision/                   # Computer Vision Backend
+│   ├── main.py                       # WebSocket server
+│   ├── squats.py                     # Squat exercise analyzer
+│   ├── lunges_vision.py              # Lunge analyzer
+│   ├── WarriorPose.py               # Yoga pose analyzer
+│   ├── legRaises.py                 # Leg raise analyzer
+│   ├── bark_tts.py                  # Audio feedback
+│   ├── models_vision/                # Pre-trained ML models
+│   ├── requirements.txt              # Vision dependencies
+│   └── README.md                     # Vision documentation
+│
+├── package.json                      # NPM scripts for full stack
+├── requirements.txt                  # Main project requirements
+├── .env.local                        # Environment variables
+├── .gitignore                        # Git ignore patterns
+└── README.md                         # This file
+```
+
+---
+
+## Quick Start
+
+### Prerequisites
+
+- Python 3.10+
+- Node.js 18+
+- MongoDB (local or cloud)
+
+### 1. Clone Repository
+
+```bash
+git clone https://github.com/22it005manav/PhysioVision.git
+cd PhysioVision
+```
+
+### 2. Frontend Setup
+
+```bash
+npm install
+```
+
+### 3. Backend Setup
+
+```bash
+cd Backend
+python -m venv venv
+
+# Windows:
+venv\Scripts\activate
+
+# macOS/Linux:
+source venv/bin/activate
+
+pip install -r requirements.txt
+```
+
+### 4. Vision Backend Setup
+
+```bash
+cd ../Backend_Vision
+python -m venv venv
+
+# Windows:
+venv\Scripts\activate
+
+# macOS/Linux:
+source venv/bin/activate
+
+pip install -r requirements.txt
+```
+
+### 5. Environment Configuration
+
+Create `.env.local` in project root:
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8002
+MONGODB_URI=mongodb://localhost:27017/PhysioVision
+MISTRAL_API_KEY=your_mistral_api_key
+```
+
+### 6. Start All Services
+
+```bash
+# Terminal 1 - Activate venv & start Backend API
+cd Backend
+venv\Scripts\activate  # Windows
+python -m uvicorn app.main:app --reload --port 8002
+
+# Terminal 2 - Activate venv & Start Vision Backend
+cd Backend_Vision
+venv\Scripts\activate  # Windows
+python main.py
+
+# Terminal 3 - Start Frontend
+npm run dev:frontend
+```
+
+Frontend runs on `http://localhost:3001`
+
+---
+
+## Detailed Documentation
+
+- [Backend API Documentation](./Backend/README.md) - API endpoints, setup, troubleshooting
+- [Vision Backend Documentation](./Backend_Vision/README.md) - Exercise analysis, models, WebSocket API
 
 ---
 
 ## AI & Model Details
 
-### Chatbot (RAG Pipeline)
+### RAG Chatbot Pipeline
 
-- **Embedding Model:** SentenceTransformer (all-MiniLM-L6-v2)
-- **Retrieval:** Adaptive retrieval from patient and nutrition datasets (stored as .npy embeddings)
-- **LLM:** MistralAI (mistral-large-latest) for response generation
-- **Pipeline:** User query → intent detection → embedding → similarity search → context → LLM response
+**Components:**
 
-### Vision Models
+- Embedding: SentenceTransformer (all-MiniLM-L6-v2)
+- Retrieval: Chroma vector database
+- LLM: MistralAI (mistral-large-latest)
 
-- **Pose Estimation:** MediaPipe Pose (Google)
-- **Squats:** Custom TensorFlow Keras model (`best_squat_model.keras`) trained on pose keypoints, with scaler and label encoder
-- **Lunges:** scikit-learn model with PCA and scaler, custom logic for rep counting and form feedback
-- **Warrior Pose & Leg Raises:** Rule-based analysis using pose angles and thresholds
-- **Feedback:** Real-time, frame-by-frame analysis with error detection and rep counting
+**Flow:**
+
+```
+User Query
+  → Intent Classification
+  → Query Embedding
+  → Semantic Search in Knowledge Base
+  → Context Extraction
+  → LLM Response Generation
+  → User Response
+```
+
+### Vision Analysis Models
+
+| Exercise         | Model Type           | Input                     | Output                         |
+| ---------------- | -------------------- | ------------------------- | ------------------------------ |
+| **Squats**       | TensorFlow/Keras CNN | Pose landmarks + skeleton | Form classification + feedback |
+| **Lunges**       | scikit-learn + rules | Keypoint angles           | Rep count + form score         |
+| **Warrior Pose** | Rule-based geometry  | 33-point MediaPipe pose   | Pose correctness score         |
+| **Leg Raises**   | Rule-based angles    | Hip & leg angles          | Rep count + form quality       |
+
+**Pose Estimation:** MediaPipe Pose (33-point body landmark detection)
+
+---
+
+## Deployment
+
+### Docker Support
+
+The project is Docker-ready. Create `docker-compose.yml` for containerized deployment.
+
+### Production Checklist
+
+- [ ] Use environment variables for all secrets
+- [ ] Hash user passwords (bcrypt/argon2)
+- [ ] Enable HTTPS in production
+- [ ] Set up MongoDB authentication
+- [ ] Implement request rate limiting
+- [ ] Add comprehensive error logging
+- [ ] Set up automated backups for database
+- [ ] Configure CORS for production domain
 
 ---
 
-## Backend Logic
+## Development Guidelines
 
-### FastAPI Backend
+- **Code Style:** Follow PEP 8 (Python) and ESLint (TypeScript)
+- **Type Safety:** Use TypeScript for frontend, type hints for Python
+- **Testing:** Unit tests for utilities, integration tests for API
+- **Commits:** Write clear, descriptive commit messages
+- **Documentation:** Update README for new features
 
-- **Endpoints:** Auth, user profile, health data, chat, weekly plan, vision report
-- **RAG Chatbot:** Loads embeddings, routes queries, generates responses, caches frequent queries
-- **MongoDB:** Stores users, physical attributes, weekly plans, and session reports
-- **Security:** CORS enabled, environment variable support, plaintext password (should be hashed for production)
+---
+
+## Support & Contributing
+
+For issues, questions, or contributions, please refer to the development team.
 
 ---
 
-## Vision Backend Logic
+## License
 
-- **WebSocket Server:** Receives video frames, returns annotated frames, feedback, and rep counts
-- **Exercise Analyzers:**
-  - **Squats:** ML model predicts form, counts reps, provides feedback
-  - **Lunges:** Angle-based and ML logic, tracks leading leg, rep cycles, and common errors
-  - **Warrior Pose:** Checks knee, hip, torso, and arm angles for pose correctness
-  - **Leg Raises:** Monitors leg angle, hip movement, and rep quality
-- **Session Reports:** Summarizes good form duration, errors, and reps at end of session
-- **Audio Feedback:** Uses Edge TTS and Google Translate for bilingual support
-
----
+Proprietary - PhysioVision Project. All rights reserved.
 
 ## Frontend Overview
 
