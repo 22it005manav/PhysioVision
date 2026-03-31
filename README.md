@@ -791,15 +791,7 @@ Backend/Backend/setup_database.py can initialize fallback files and dummy embedd
 - test_mongodb.py: checks MongoDB connectivity
 - test_mistral.py: checks Mistral-related behavior
 
-## 12. Other documentation included
-
-- QUICK_START.md
-- SERVICE_ACCESS_GUIDE.md
-- MONGODB_SETUP_GUIDE.md
-- 000_START_HERE.md
-- CHANGELOG.md
-
-## 13. Security and production notes
+## 12. Security and production notes
 
 Before production deployment:
 
@@ -809,7 +801,7 @@ Before production deployment:
 - Restrict CORS origins appropriately
 - Add proper auth tokens/session management
 
-## 14. Media/demo references
+## 13. Media/demo references
 
 The following presentation assets are currently referenced in this project:
 
@@ -833,8 +825,6 @@ The following presentation assets are currently referenced in this project:
   - https://github.com/user-attachments/assets/151388e1-b676-4925-b3af-e60a923c4a18
 - Project poster:
   - https://github.com/user-attachments/assets/9ecedbee-da63-4481-b94c-a2591fd09d98
-
-## 15. Quick access summary
 
 Typical local URLs:
 
